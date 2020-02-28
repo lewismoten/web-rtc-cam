@@ -18,13 +18,20 @@
 		};
 
 		try {
-			(navigator.mediaDevices || navigator)
-				.getUserMedia(constraints)
-				.then(setVideoSource)
-				.catch(onError);
+			getUserMedia(constraints, setVideoSource, onError);
 		} catch(e) {
 			onError(e);
 		}
+	}
+
+	function getUserMedia(constraints, onLoad, onError) {
+		if(navigator.getUserMedia) {
+			return navigator.getUserMedia(constraints, onLoad, onError);
+		}
+		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			return navigator.mediaDevices.getUserMedia(constraints).then(onLoad).catch(onError);
+		}
+		throw 'Unable to determine how to get user media';
 	}
 
 	function setVideoSource(stream) {
