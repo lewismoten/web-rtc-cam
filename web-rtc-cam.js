@@ -42,7 +42,6 @@
 
 	function clear(node) {
 		var child;
-		if (typeof node !== 'object') return;
 		while(child = node.firstChild) {
 			node.removeChild(child);
 		}
@@ -50,8 +49,13 @@
 
 	function onError(error) {
 
-		var message = getErrorMessage(error),
-			container = document.getElementById('content');
+		var message = getErrorMessage(error);
+		var container = document.getElementById('content');
+
+		if (container === null) {
+			alert(message);
+			return;
+		}
 
 		clear(container);
 
