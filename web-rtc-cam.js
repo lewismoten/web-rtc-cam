@@ -42,6 +42,7 @@
 
 	function clear(node) {
 		var child;
+		if (typeof node !== 'object') return;
 		while(child = node.firstChild) {
 			node.removeChild(child);
 		}
