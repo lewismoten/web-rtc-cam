@@ -10,21 +10,21 @@
 
 		var constraints = {
 			audio: false,
-			video: true
+			video: {
+				width: 640,
+				height: 480,
+				facingMode: 'user'
+			}
 		};
 
-		setupUserMedia();
-
-		navigator.getUserMedia(constraints, onLoad, onError);
-	}
-
-	function setupUserMedia() {
-
-		navigator.getUserMedia = 
-			navigator.getUserMedia 			||
-			navigator.webkitGetUserMedia 	||
-			navigator.mozGetuserMedia;
-
+		try {
+			navigator.mediaDevices
+				.getUserMedia(constraints)
+				.then(setVideoSource)
+				.catch(onError);
+		} catch(e) {
+			onError(e);
+		}
 	}
 
 	function setVideoSource(stream) {
@@ -33,7 +33,7 @@
 			video = document.createElement('video');
 
 		video.autoplay	= true;
-		video.src 		= stream;
+		video.srcObject = stream;
 
 		clear(container);
 
@@ -45,18 +45,6 @@
 		while(child = node.firstChild) {
 			node.removeChild(child);
 		}
-	}
-
-	function onLoad(mediaStream) {
-		var stream = mapStream(mediaStream);
-
-		setVideoSource(stream);
-	}
-
-	function mapStream(mediaStream) {
-		var url = window.URL;
-
-		return url ? url.createObjectURL(mediaStream) : mediaStream;
 	}
 
 	function onError(error) {
