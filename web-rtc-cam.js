@@ -26,6 +26,7 @@
 
 	function getUserMedia(constraints, onLoad, onError) {
 		if(navigator.getUserMedia) {
+
 			return navigator.getUserMedia(constraints, onLoad, onError);
 		}
 		if(navigator.webkitGetUserMedia) {
@@ -40,6 +41,10 @@
 			// Edge
 			return navigator.mediaDevices.getUserMedia(constraints).then(onLoad).catch(onError);
 		}
+		console.error('getUserMedia', navigator.getUserMedia);
+		console.error('webkitGetUserMedia', navigator.webkitGetUserMedia);
+		console.error('mozGetUserMedia', navigator.mozGetUserMedia);
+		console.error('mediaDevices', navigator.mediaDevices);
 		throw 'Unable to determine how to get user media';
 	}
 
