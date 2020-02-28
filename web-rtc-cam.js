@@ -2,12 +2,13 @@
 
 	'use strict';
 
-	main();
+	window.addEventListener("load", onWindowLoaded);
 
-	return;
+	function onWindowLoaded() {
+		document.getElementById("readyButton").addEventListener('click', onReadyClick);
+	}
 
-	function main() {
-
+	function onReadyClick() {
 		var constraints = {
 			audio: false,
 			video: {
@@ -45,43 +46,26 @@
 		console.error('webkitGetUserMedia', navigator.webkitGetUserMedia);
 		console.error('mozGetUserMedia', navigator.mozGetUserMedia);
 		console.error('mediaDevices', navigator.mediaDevices);
-		throw 'Unable to determine how to get user media';
+		throw 'Unable to determine how to get user media. Is your camera blocked from using this site?';
 	}
 
 	function setVideoSource(stream) {
-
-		var container = document.getElementById('content'),
-			video = document.createElement('video');
-
-		video.autoplay	= true;
+		var video = document.getElementById('videoCamera');
 		video.srcObject = stream;
-
-		clear(container);
-
-		container.appendChild(video);
-	}
-
-	function clear(node) {
-		var child;
-		while(child = node.firstChild) {
-			node.removeChild(child);
-		}
 	}
 
 	function onError(error) {
 
 		var message = getErrorMessage(error);
-		var container = document.getElementById('content');
+		var content = document.getElementById('content');
 
-		if (container === null) {
+		if (content === null) {
 			console.error(error);
 			alert(error);
 			return;
 		}
 
-		clear(container);
-
-		container.innerText = 'Error: ' + message;
+		content.innerText = 'Error: ' + message;
 
 	}
 
