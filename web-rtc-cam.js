@@ -18,7 +18,7 @@
 		};
 
 		try {
-			navigator.mediaDevices
+			(navigator.mediaDevices || navigator)
 				.getUserMedia(constraints)
 				.then(setVideoSource)
 				.catch(onError);
