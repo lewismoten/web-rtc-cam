@@ -28,7 +28,16 @@
 		if(navigator.getUserMedia) {
 			return navigator.getUserMedia(constraints, onLoad, onError);
 		}
+		if(navigator.webkitGetUserMedia) {
+			// Chrome
+			return navigator.webkitGetUserMedia(constraints, onLoad, onError);
+		}
+		if(navigator.mozGetUserMedia) {
+			// Mozilla
+			return navigator.mozGetUserMedia(constraints, onLoad, onError);
+		}
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			// Edge
 			return navigator.mediaDevices.getUserMedia(constraints).then(onLoad).catch(onError);
 		}
 		throw 'Unable to determine how to get user media';
