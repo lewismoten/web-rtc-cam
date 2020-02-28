@@ -60,7 +60,7 @@
 		var container = document.getElementById('content');
 
 		if (container === null) {
-			alert(message);
+			alert(error);
 			return;
 		}
 
