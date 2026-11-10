@@ -1,3 +1,5 @@
+![web-rtc-cam: Webcam stream in a browser page](docs/images/social-preview.png)
+
 # web-rtc-cam
 
 Display the end user's webcam stream on a web page.
